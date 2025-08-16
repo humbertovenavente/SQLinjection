@@ -58,30 +58,24 @@ const Navbar = () => {
                           : 'text-gray-600 hover:text-primary-600 hover:bg-gray-50'
                       }`}
                     >
-                      <Icon className="w-4 h-4" />
+                      
                       <span>{item.label}</span>
                     </Link>
                   );
                 })}
                 
                 {/* Usuario y logout */}
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
-                      <User className="w-4 h-4 text-primary-600" />
-                    </div>
-                    <span className="text-sm font-medium text-gray-700">
-                      {user?.username || 'Usuario'}
-                    </span>
+                <div>
+                  <div>
+                   
                   </div>
                   
-                  <button
+                  <Link
                     onClick={handleLogout}
-                    className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-danger-600 hover:bg-danger-50 transition-colors duration-200"
                   >
-                    <LogOut className="w-4 h-4" />
-                    <span>Close</span>
-                  </button>
+                  
+                    <span>Log out</span>
+                  </Link>
                 </div>
               </>
             ) : (

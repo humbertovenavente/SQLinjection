@@ -2,7 +2,7 @@ import React from 'react';
 import { Lock } from 'lucide-react';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+ 
 
   return (
     <footer className="footer">
@@ -16,7 +16,7 @@ const Footer = () => {
             </span>
           </div>
           <p className="text-gray-400 text-sm">
-            © {currentYear} Security Project
+             Security Project 2025
           </p>
         </div>
 

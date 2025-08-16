@@ -131,7 +131,7 @@ const SQLInjectionDemoPage = () => {
   const attackExamples = [
     // CATEGORÍA 1: EXFILTRACIÓN DE DATOS Y ESQUEMA
     {
-      name: 'UNION Attack - Usuarios',
+      name: 'UNION Attack - Users',
       description: 'Extract all users from the database using UNION',
       query: "' UNION ALL SELECT 999, username, email, NOW() FROM users --",
       category: 'Data Exfiltration & Schema'
@@ -263,8 +263,7 @@ const SQLInjectionDemoPage = () => {
             
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
-                SQL Injection Attacks
-              </h1>
+It's time to attack!              </h1>
          
             </div>
           </div>
@@ -319,7 +318,7 @@ const SQLInjectionDemoPage = () => {
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                     }`}
                   >
-                     Local (My POSTGRESQL DATABASE)
+                      Local (My PostgreSQL DATABASE)
                   </button>
                   <button
                     onClick={() => setLinkMode('external')}
@@ -328,7 +327,7 @@ const SQLInjectionDemoPage = () => {
                         ? 'bg-green-600 text-white'
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                     }`}
-                  >
+                  >   
                      Website Link 
                   </button>
                 </div>
@@ -828,7 +827,6 @@ const SQLInjectionDemoPage = () => {
                 </div>
               ) : (
                 <div className="text-center py-8 text-gray-500">
-                  <Database className="w-12 h-12 mx-auto mb-3 text-gray-300" />
                   <p>Execute a query to see the results</p>
                 </div>
               )}
