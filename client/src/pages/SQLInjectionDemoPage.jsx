@@ -375,7 +375,6 @@ It's time to attack!              </h1>
                       </>
                     ) : (
                       <>
-                        <Play className="w-4 h-4 mr-2" />
                         Execute Attack!
                       </>
                     )}
