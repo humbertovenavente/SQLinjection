@@ -1,0 +1,22 @@
+{
+  "name": "sqlinjection-demo",
+  "version": "1.0.0",
+  "description": "Demo educativa de SQL Injection con prevención: React + Node.js + PostgreSQL",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "cd server && npm run dev",
+    "client:dev": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "test": "jest",
+    "db:migrate": "cd server && npm run db:migrate",
+    "db:seed": "cd server && npm run db:seed"
+  },
+  "keywords": ["sql-injection", "security", "education", "react", "nodejs", "postgresql"],
+  "author": "Tu Nombre",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
