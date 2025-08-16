@@ -23,7 +23,7 @@ router.post('/toggle-mode', asyncErrorHandler(async (req, res) => {
       message: `Mode changed to: ${currentMode === 'secure' ? 'Secure' : 'Vulnerable'}`
     });
   } catch (error) {
-    console.error('Error al cambiar modo:', error);
+    console.error('Error changing mode:', error);
     throw error;
   }
 }));
@@ -89,26 +89,26 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
             queryExecuted: executedSQL,
             parametersUsed: [`%${searchTerm}%`],
             securityMeasures: [
-              'Parámetros parametrizados',
-              'Validación de entrada',
-              'Escape de caracteres especiales',
-              'Prevención de SQL Injection'
+              'Parameterized parameters',
+              'Input validation',
+              'Escape of special characters',
+              'SQL Injection prevention'
             ],
-            explanation: 'Esta consulta se ejecutó de forma segura usando parámetros parametrizados que previenen ataques SQL Injection.',
-            actualResults: result.rows.length > 0 ? 'Se encontraron resultados reales en la base de datos' : 'No se encontraron coincidencias para este término de búsqueda'
+            explanation: 'This query was executed securely using parameterized parameters that prevent SQL Injection attacks.',
+            actualResults: result.rows.length > 0 ? 'Real results were found in the database' : 'No matches found for this search term'
           }
         });
         
       } catch (error) {
-        console.error('Error en consulta segura:', error);
+        console.error('Error in secure query:', error);
         res.status(500).json({
           error: true,
-          message: 'Error al ejecutar consulta segura',
+          message: 'Error executing secure query',
           details: error.message
         });
       }
       
-      return;
+      return; // TODO: Remove this
     } else if (mode === 'preview_vulnerable') {
       // MODO VULNERABLE: Ejecutar SQL real para demostrar el riesgo
       try {
@@ -136,14 +136,14 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
             
             result = await query(vulnerableSQL);
             executedSQL = createTableSQL;
-            message = 'Create Table Attack ejecutado - Tabla creada';
+            message = 'Create Table Attack executed - Table created';
             
           } catch (error) {
             // Fallback a consulta segura si falla
-            const fallbackSQL = "SELECT id, username, email, created_at FROM users LIMIT 5";
+            const fallbackSQL = "SELECT id, username, email, created_at FROM users ";
             result = await query(fallbackSQL);
             executedSQL = fallbackSQL;
-            message = 'Create Table Attack falló - Consulta segura ejecutada';
+            message = 'Create Table Attack failed - Secure query executed';
           }
           
         } else if (searchTerm.includes('INSERT INTO')) {
@@ -169,14 +169,14 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
             
             result = await query(vulnerableSQL);
             executedSQL = insertSQL;
-            message = 'Insert Data Attack ejecutado - Usuario insertado';
+            message = 'Insert Data Attack executed - Data inserted';
             
           } catch (error) {
             // Fallback a consulta segura si falla
-            const fallbackSQL = "SELECT id, username, email, created_at FROM users LIMIT 5";
+            const fallbackSQL = "SELECT id, username, email, created_at FROM users ";
             result = await query(fallbackSQL);
             executedSQL = fallbackSQL;
-            message = 'Insert Data Attack falló - Consulta segura ejecutada';
+            message = 'Insert Data Attack failed - Secure query executed';
           }
           
         } else if (searchTerm.includes('DELETE FROM')) {
@@ -200,14 +200,14 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
             
             result = await query(vulnerableSQL);
             executedSQL = deleteSQL;
-            message = 'Delete Data Attack ejecutado - Datos eliminados';
+            message = 'Delete Data Attack executed - Data deleted';
             
           } catch (error) {
             // Fallback a consulta segura si falla
-            const fallbackSQL = "SELECT id, username, email, created_at FROM users LIMIT 5";
+            const fallbackSQL = "SELECT id, username, email, created_at FROM users ";
             result = await query(fallbackSQL);
             executedSQL = fallbackSQL;
-            message = 'Delete Data Attack falló - Consulta segura ejecutada';
+            message = 'Delete Data Attack failed - Secure query executed';
           }
           
         } else if (searchTerm.includes('DROP TABLE')) {
@@ -230,12 +230,12 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
               
               result = await query(vulnerableSQL);
               executedSQL = dropSQL;
-              message = 'Drop Table Attack ejecutado - Tabla eliminada';
+              message = 'Drop Table Attack executed - Table dropped successfully';
             } else {
               const vulnerableSQL = `SELECT 1 as id, 'DROP TABLE failed' as username, 'Table users does not exist' as email, NOW()::text as created_at`;
               result = await query(vulnerableSQL);
               executedSQL = searchTerm;
-              message = 'Drop Table Attack falló - Tabla no existe';
+              message = 'Drop Table Attack failed - Table does not exist in the database';
             }
             
           } catch (error) {
@@ -243,7 +243,7 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
             const vulnerableSQL = `SELECT 1 as id, 'DROP TABLE failed' as username, '${error.message}' as email, NOW()::text as created_at`;
             result = await query(vulnerableSQL);
             executedSQL = searchTerm;
-            message = 'Drop Table Attack falló';
+            message = 'Drop Table Attack failed - Table does not exist in the database';
           }
           
         } else if (searchTerm.includes('UPDATE')) {
@@ -272,14 +272,14 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
             
             result = await query(vulnerableSQL);
             executedSQL = updateSQL;
-            message = 'Update Attack ejecutado - Emails modificados';
+            message = 'Update Attack executed - Data updated';
             
           } catch (error) {
             console.log('Error en UPDATE:', error.message);
             const vulnerableSQL = `SELECT 1 as id, 'UPDATE failed' as username, '${error.message}' as email, NOW()::text as created_at`;
             result = await query(vulnerableSQL);
             executedSQL = searchTerm;
-            message = 'Update Attack falló';
+            message = 'Update Attack failed - Data not updated';
           }
           
         } else if (searchTerm.includes('information_schema.tables')) {
@@ -289,7 +289,7 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
           
           result = await query(vulnerableSQL);
           executedSQL = vulnerableSQL;
-          message = 'Schema Discovery - Tablas ejecutado';
+          message = 'Schema Discovery - Tables executed successfully';
           
         } else if (searchTerm.includes('information_schema.columns')) {
           
@@ -298,7 +298,7 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
           
           result = await query(vulnerableSQL);
           executedSQL = vulnerableSQL;
-          message = 'Schema Discovery - Columnas ejecutado';
+          message = 'Schema Discovery - Columns executed successfully';
           
         } else if (searchTerm.includes('pg_user')) {
           
@@ -307,7 +307,7 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
           
           result = await query(vulnerableSQL);
           executedSQL = vulnerableSQL;
-          message = 'User Enumeration ejecutado';
+          message = 'User Enumeration executed';
           
         } else if (searchTerm.includes('pg_database_size')) {
           
@@ -316,7 +316,7 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
           
           result = await query(vulnerableSQL);
           executedSQL = vulnerableSQL;
-          message = 'Database Stats ejecutado';
+          message = 'Database Stats executed';
           
         } else if (searchTerm.includes('has_table_privilege')) {
           
@@ -325,7 +325,7 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
           
           result = await query(vulnerableSQL);
           executedSQL = vulnerableSQL;
-          message = 'Privilege Check ejecutado';
+          message = 'Privilege Check executed';
           
         } else if (searchTerm.includes('information_schema')) {
           
@@ -334,7 +334,7 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
           
           result = await query(vulnerableSQL);
           executedSQL = vulnerableSQL;
-          message = 'Schema Discovery ejecutado';
+          message = 'Schema Discovery executed';
           
         } else if (searchTerm.includes('version()') || searchTerm.includes('current_database') || searchTerm.includes('current_user')) {
           
@@ -343,7 +343,7 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
           
           result = await query(vulnerableSQL);
           executedSQL = vulnerableSQL;
-          message = 'System Info Attack ejecutado';
+          message = 'System Info Attack executed';
           
         } else if (searchTerm.includes('UNION')) {
           
@@ -357,7 +357,7 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
           } catch (error) {
             console.log('Error en UNION:', error.message);
             // Fallback a consulta segura si falla
-            const fallbackSQL = "SELECT id, username, email, created_at FROM users LIMIT 5";
+            const fallbackSQL = "SELECT id, username, email, created_at FROM users ";
             result = await query(fallbackSQL);
             executedSQL = fallbackSQL;
             message = 'UNION Attack failed - Secure query executed';
@@ -380,16 +380,16 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
               const fieldMatch = searchTerm.match(/SELECT\s+(.+?)\s+FROM/i);
               if (fieldMatch) {
                 const field = fieldMatch[1].trim();
-                const simpleSQL = `SELECT ${field} FROM users LIMIT 5`;
+                const simpleSQL = `SELECT ${field} FROM users `;
                 result = await query(simpleSQL);
                 executedSQL = simpleSQL;
-                message = 'Consulta SELECT simplificada ejecutada';
+                  message = 'SELECT query executed';
               } else {
                 // Fallback final
-                const fallbackSQL = 'SELECT id, username, email, created_at FROM users LIMIT 5';
+                const fallbackSQL = 'SELECT id, username, email, created_at FROM users ';
                 result = await query(fallbackSQL);
                 executedSQL = fallbackSQL;
-                message = 'Consulta fallback ejecutada';
+                message = 'Fallback query executed';
               }
             }
           }
@@ -400,7 +400,7 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
           
           result = await query(vulnerableSQL);
           executedSQL = vulnerableSQL;
-          message = 'Búsqueda vulnerable ejecutada';
+          message = 'Vulnerable search executed';
         }
       } catch (sqlError) {
         console.error('Error en consulta vulnerable:', sqlError);
@@ -410,13 +410,13 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
         result = await query(fallbackSQL, [`%${searchTerm}%`]);
         
         executedSQL = fallbackSQL;
-        message = 'MODO DEMO: Consulta vulnerable falló, ejecutando consulta segura como fallback';
+        message = 'Vulnerable query failed, executing secure query as fallback';
       }
       
     } else {
       return res.status(400).json({
         error: true,
-        message: 'Modo inválido. Use "secure" o "preview_vulnerable"'
+        message: 'Invalid mode. Use "secure" or "preview_vulnerable"'
       });
     }
 
@@ -541,17 +541,17 @@ router.get('/search', asyncErrorHandler(async (req, res) => {
         queryExecuted: executedSQL,
         parametersUsed: [`%${searchTerm}%`],
         securityMeasures: [
-          'Parámetros parametrizados',
-          'Validación de entrada',
-          'Escape de caracteres especiales',
-          'Prevención de SQL Injection'
+          'Parameterized parameters',
+          'Input validation',
+          'Escape of special characters',
+          'SQL Injection prevention'
         ],
-        explanation: 'Esta consulta se ejecutó de forma segura usando parámetros parametrizados que previenen ataques SQL Injection.'
+        explanation: 'This query was executed securely using parameterized parameters that prevent SQL Injection attacks.'
       } : undefined
     });
 
   } catch (error) {
-    console.error('Error en búsqueda:', error);
+    console.error('Error in search:', error);
     
     // Respuesta de error más amigable
     res.status(500).json({
@@ -622,11 +622,11 @@ router.get('/filter', asyncErrorHandler(async (req, res) => {
         total: totalUsers,
         pages: Math.ceil(totalUsers / parseInt(limit))
       },
-      message: '🔒 Filtros aplicados de forma segura con parámetros parametrizados'
+      message: 'Filters applied securely with parameterized parameters'
     });
 
   } catch (error) {
-    console.error('Error en filtros:', error);
+        console.error('Error in filters:', error);
     throw error;
   }
 }));
@@ -639,7 +639,7 @@ router.post('/user', authenticateToken, asyncErrorHandler(async (req, res) => {
   if (!username || !email) {
     return res.status(400).json({
       error: true,
-      message: 'Username y email son requeridos'
+      message: 'Username and email are required'
     });
   }
 
@@ -667,7 +667,7 @@ router.post('/user', authenticateToken, asyncErrorHandler(async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: 'Usuario creado exitosamente de forma segura',
+      message: 'User created successfully securely',
       user: {
         id: newUser.id,
         username: newUser.username,
@@ -675,11 +675,11 @@ router.post('/user', authenticateToken, asyncErrorHandler(async (req, res) => {
         isAdmin: newUser.is_admin,
         createdAt: newUser.created_at
       },
-      securityNote: '🔒 Usuario creado usando consultas parametrizadas para prevenir SQL Injection'
+      securityNote: 'User created using parameterized queries to prevent SQL Injection'
     });
 
   } catch (error) {
-    console.error('Error al crear usuario:', error);
+    console.error('Error creating user:', error);
     throw error;
   }
 }));
@@ -692,7 +692,7 @@ router.put('/user/:id', authenticateToken, asyncErrorHandler(async (req, res) =>
   if (isNaN(userId)) {
     return res.status(400).json({
       error: true,
-      message: 'ID de usuario inválido'
+      message: 'Invalid user ID'
     });
   }
 
@@ -706,7 +706,7 @@ router.put('/user/:id', authenticateToken, asyncErrorHandler(async (req, res) =>
     if (existingUser.rows.length === 0) {
       return res.status(404).json({
         error: true,
-        message: 'Usuario no encontrado'
+        message: 'User not found'
       });
     }
 
@@ -736,7 +736,7 @@ router.put('/user/:id', authenticateToken, asyncErrorHandler(async (req, res) =>
     if (updateFields.length === 0) {
       return res.status(400).json({
         error: true,
-        message: 'No se proporcionaron campos para actualizar'
+        message: 'No fields provided to update'
       });
     }
 
@@ -754,7 +754,7 @@ router.put('/user/:id', authenticateToken, asyncErrorHandler(async (req, res) =>
 
     res.json({
       success: true,
-      message: 'Usuario actualizado exitosamente de forma segura',
+      message: 'User updated successfully securely',
       user: {
         id: updatedUser.id,
         username: updatedUser.username,
@@ -762,11 +762,11 @@ router.put('/user/:id', authenticateToken, asyncErrorHandler(async (req, res) =>
         isActive: updatedUser.is_active,
         updatedAt: updatedUser.updated_at
       },
-      securityNote: '🔒 Usuario actualizado usando consultas parametrizadas para prevenir SQL Injection'
+      securityNote: 'User updated using parameterized queries to prevent SQL Injection'
     });
 
   } catch (error) {
-    console.error('Error al actualizar usuario:', error);
+    console.error('Error updating user:', error);
     throw error;
   }
 }));
@@ -778,7 +778,7 @@ router.delete('/user/:id', authenticateToken, asyncErrorHandler(async (req, res)
   if (isNaN(userId)) {
     return res.status(400).json({
       error: true,
-      message: 'ID de usuario inválido'
+      message: 'Invalid user ID'
     });
   }
 
@@ -792,7 +792,7 @@ router.delete('/user/:id', authenticateToken, asyncErrorHandler(async (req, res)
     if (result.rows.length === 0) {
       return res.status(404).json({
         error: true,
-        message: 'Usuario no encontrado'
+        message: 'User not found'
       });
     }
 
@@ -800,16 +800,16 @@ router.delete('/user/:id', authenticateToken, asyncErrorHandler(async (req, res)
 
     res.json({
       success: true,
-      message: 'Usuario desactivado exitosamente de forma segura',
+      message: 'User deactivated successfully securely',
       user: {
         id: deletedUser.id,
         username: deletedUser.username
       },
-      securityNote: '🔒 Usuario desactivado usando soft delete y consultas parametrizadas para prevenir SQL Injection'
+      securityNote: 'User deactivated using soft delete and parameterized queries to prevent SQL Injection'
     });
 
   } catch (error) {
-    console.error('Error al desactivar usuario:', error);
+    console.error('Error deactivating user:', error);
     throw error;
   }
 }));
@@ -838,11 +838,11 @@ router.get('/stats', asyncErrorHandler(async (req, res) => {
         adminUsers: parseInt(adminUsers.rows[0].count),
         recentUsers: parseInt(recentUsers.rows[0].count)
       },
-      message: '🔒 Estadísticas generadas usando consultas parametrizadas para prevenir SQL Injection'
+      message: 'Stats generated using parameterized queries to prevent SQL Injection'
     });
 
   } catch (error) {
-    console.error('Error al obtener estadísticas:', error);
+    console.error('Error getting stats:', error);
     throw error;
   }
 }));
@@ -854,7 +854,7 @@ router.get('/external-test', asyncErrorHandler(async (req, res) => {
   if (!url) {
     return res.status(400).json({
       error: true,
-      message: 'URL requerida'
+      message: 'URL required'
     });
   }
 
@@ -892,14 +892,14 @@ router.get('/external-test', asyncErrorHandler(async (req, res) => {
       headers: Object.fromEntries(response.headers.entries()),
       data: responseData,
       size: JSON.stringify(responseData).length,
-      message: '⚠️  Petición externa ejecutada - SOLO PARA FINES EDUCATIVOS'
+      message: 'External request executed - ONLY FOR EDUCATIONAL PURPOSES'
     });
 
   } catch (error) {
-    console.error('Error en petición externa:', error);
+    console.error('Error in external request:', error);
     res.status(500).json({
       error: true,
-      message: 'Error al hacer petición externa',
+      message: 'Error making external request',
       details: error.message
     });
   }

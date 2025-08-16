@@ -36,7 +36,7 @@ async function insertTestData() {
     console.log(`📊 Total de usuarios en la base de datos: ${result.rows[0].count}`);
 
     // Mostrar algunos usuarios
-    const sampleUsers = await query('SELECT username, email, is_admin FROM users LIMIT 5');
+    const sampleUsers = await query('SELECT username, email, is_admin FROM users ');
     console.log('👥 Usuarios de muestra:');
     sampleUsers.rows.forEach(user => {
       console.log(`  - ${user.username} (${user.email}) ${user.is_admin ? '[ADMIN]' : ''}`);
