@@ -1,4 +1,4 @@
-# 🛡 SQL Injection - Proyecto de Seguridad
+# SQL Injection - Proyecto de Seguridad Universidad del Istmo
 
 > * React + Node.js + PostgreSQL. Consultas parametrizadas
 
