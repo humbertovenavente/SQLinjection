@@ -1,24 +1,21 @@
-# 🛡️ SQL Injection Demo - Proyecto Educativo de Seguridad
+# 🛡 SQL Injection - Proyecto de Seguridad
 
-> **Demo educativa de SQL Injection con prevención**: React + Node.js + PostgreSQL. Consultas parametrizadas, introspección segura y simulaciones controladas para aprender sobre seguridad web.
+> * React + Node.js + PostgreSQL. Consultas parametrizadas
 
-## 🎯 Propósito
 
-Este proyecto demuestra las **mejores prácticas de seguridad** para prevenir SQL Injection en aplicaciones web modernas, mientras proporciona una experiencia educativa interactiva para desarrolladores y estudiantes de seguridad.
-
-## 🏗️ Stack Tecnológico
+##  Stack 
 
 ### Backend (Node.js + Express)
 - **Runtime**: Node.js 18+
 - **Framework**: Express.js
-- **Base de datos**: PostgreSQL con usuario de **mínimos privilegios**
+- **Base de datos**: PostgreSQL con usuario de mínimos privilegios
 - **Driver**: `pg` (node-postgres)
 - **Validación**: `zod` + `express-validator`
 - **Seguridad**: `helmet`, `express-rate-limit`, `cors`
 - **Autenticación**: JWT + bcrypt
 - **Variables de entorno**: `dotenv`
 - **Logging**: `morgan`
-- **Migraciones**: `node-pg-migrate`
+
 
 ### Frontend (React + Vite)
 - **Framework**: React 18
@@ -26,35 +23,33 @@ Este proyecto demuestra las **mejores prácticas de seguridad** para prevenir SQ
 - **Routing**: React Router DOM
 - **HTTP Client**: Axios
 - **Forms**: React Hook Form
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
+- **Styling**: Tailwind CS
 - **Notifications**: React Hot Toast
 
-## 🔒 Características de Seguridad
+## Características de Seguridad
 
 ### Prevención de SQL Injection
-- ✅ **Consultas parametrizadas** en todas las operaciones de BD
-- ✅ **Validación de entrada** con Zod y express-validator
-- ✅ **Sanitización** de datos de entrada
-- ✅ **Escape automático** de caracteres peligrosos
-- ✅ **Logging de intentos sospechosos**
+- **Consultas parametrizadas** en todas las operaciones de BD
+- **Validación de entrada** con Zod y express-validator
+- **Sanitización** de datos de entrada
+- **Escape automático** de caracteres peligrosos
+- **Logging de intentos sospechosos**
 
 ### Seguridad Web
-- ✅ **Helmet.js** para headers de seguridad
-- ✅ **CORS** configurado correctamente
-- ✅ **Rate limiting** por IP y usuario
-- ✅ **Content Security Policy** (CSP)
-- ✅ **XSS Protection** headers
-- ✅ **CSRF Protection** (JWT tokens)
+- **Helmet.js** para headers de seguridad
+- **CORS** configurado correctamente
+- **Rate limiting** por IP y usuario
+- **Content Security Policy** 
+- **XSS Protection** headers
+- **JWT tokens** 
 
 ### Autenticación y Autorización
-- ✅ **JWT tokens** con expiración
-- ✅ **Bcrypt** para hash de contraseñas
-- ✅ **Bloqueo de cuentas** después de intentos fallidos
-- ✅ **Middleware de autenticación** robusto
-- ✅ **Control de acceso basado en roles**
+-  **JWT tokens** 
+-  **Bcrypt** para hash de contraseñas
+-   **Middleware de autenticación** robusto
+-  **Control de acceso basado en roles**
 
-## 🚀 Instalación y Configuración
+##  Instalación y Configuración
 
 ### Prerrequisitos
 - Node.js 18+ 
@@ -63,7 +58,7 @@ Este proyecto demuestra las **mejores prácticas de seguridad** para prevenir SQ
 
 ### 1. Clonar el repositorio
 ```bash
-git clone <tu-repositorio>
+git clone <-repositorio>
 cd SQLinjection
 ```
 
@@ -118,47 +113,10 @@ El proyecto estará disponible en:
 - **Frontend**: http://localhost:5173
 - **Backend**: http://localhost:3000
 
-## 📚 Uso Educativo
 
-### Modo Seguro vs Vulnerable
-El proyecto incluye un **feature flag** educativo que permite cambiar entre:
-
-- **`MODE=secure`**: Todas las consultas son parametrizadas (por defecto)
-- **`MODE=preview_vulnerable`**: Muestra cómo se verían consultas vulnerables, pero **NO las ejecuta**
-
-### Ejemplos de Consultas Seguras
-```javascript
-// ❌ VULNERABLE (NO usar)
-const query = `SELECT * FROM users WHERE username = '${username}'`;
-
-// ✅ SEGURO (Siempre usar)
-const query = 'SELECT * FROM users WHERE username = $1';
-const result = await client.query(query, [username]);
 ```
 
-### Endpoints de Demo
-- `GET /api/demo/search?q=term&mode=secure` - Búsqueda segura
-- `GET /api/demo/filter?status=true&role=admin` - Filtros seguros
-- `POST /api/demo/user` - Creación segura de usuarios
-- `PUT /api/demo/user/:id` - Actualización segura
-- `DELETE /api/demo/user/:id` - Eliminación segura (soft delete)
-
-## 🧪 Testing
-
-### Ejecutar tests del servidor
-```bash
-cd server
-npm test
-```
-
-### Ejecutar tests del cliente
-```bash
-cd client
-npm test
-```
-
-## 📊 Estructura del Proyecto
-
+## Arquitectura
 ```
 SQLinjection/
 ├── server/                 # Backend Node.js
@@ -176,47 +134,9 @@ SQLinjection/
 └── README.md              # Este archivo
 ```
 
-## 🔑 Credenciales de Prueba
-
-Después de ejecutar el seed:
-- **Admin**: `admin@demo.com` / `Admin123!`
-- **Usuario**: `usuario1@demo.com` / `User123!`
-
-## 🚨 Advertencias de Seguridad
-
-⚠️ **IMPORTANTE**: Este proyecto es **SOLO para fines educativos**. 
-
-- **NO** usar en producción sin revisión de seguridad
-- **NO** exponer a internet sin configuración adicional
-- **SIEMPRE** usar consultas parametrizadas en aplicaciones reales
-- **SIEMPRE** validar y sanitizar entrada de usuario
-
-## 📖 Recursos de Aprendizaje
+## Recursos de Aprendizaje
 
 - [OWASP SQL Injection Prevention](https://owasp.org/www-community/attacks/SQL_Injection)
 - [Node.js Security Best Practices](https://nodejs.org/en/docs/guides/security/)
 - [PostgreSQL Security](https://www.postgresql.org/docs/current/security.html)
 - [Express Security Best Practices](https://expressjs.com/en/advanced/best-practices-security.html)
-
-## 🤝 Contribuir
-
-1. Fork el proyecto
-2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abrir un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## 🆘 Soporte
-
-Si tienes problemas o preguntas:
-1. Revisa los issues existentes
-2. Crea un nuevo issue con detalles del problema
-3. Incluye logs de error y pasos para reproducir
-
----
-
-**🔒 Recuerda: La seguridad es responsabilidad de todos los desarrolladores. ¡Mantén tu código seguro!**
