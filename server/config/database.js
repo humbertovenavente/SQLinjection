@@ -12,22 +12,22 @@ const pool = new Pool({
 
 // Eventos del pool
 pool.on('connect', (client) => {
-  console.log('🔌 Nueva conexión a PostgreSQL establecida');
+  console.log('Nueva conexión a PostgreSQL establecida');
 });
 
 pool.on('error', (err, client) => {
-  console.error('❌ Error inesperado en el pool de PostgreSQL:', err);
+  console.error('Error inesperado en el pool de PostgreSQL:', err);
 });
 
 pool.on('remove', (client) => {
-  console.log('🔌 Cliente removido del pool de PostgreSQL');
+  console.log('Cliente removido del pool de PostgreSQL');
 });
 
 // Función para conectar a la base de datos
 async function connectDB() {
   try {
     const client = await pool.connect();
-    console.log('✅ Conexión a PostgreSQL establecida exitosamente');
+    console.log(' Conexión a PostgreSQL establecida exitosamente');
     
     // Verificar que el usuario tiene los privilegios mínimos
     const result = await client.query(`
@@ -40,12 +40,12 @@ async function connectDB() {
         has_table_privilege(current_user, 'users', 'DELETE') as can_delete_users
     `);
     
-    console.log('🔐 Privilegios del usuario:', result.rows[0]);
+    console.log(' Privilegios del usuario:', result.rows[0]);
     
     client.release();
     return true;
   } catch (error) {
-    console.error('❌ Error al conectar a PostgreSQL:', error);
+    console.error('Error al conectar a PostgreSQL:', error);
     throw error;
   }
 }
@@ -59,12 +59,12 @@ async function query(text, params) {
     
     // Log de queries (solo en desarrollo)
     if (process.env.NODE_ENV === 'development') {
-      console.log('📊 Query ejecutada:', { text, duration, rows: result.rowCount });
+      console.log('Query ejecutada:', { text, duration, rows: result.rowCount });
     }
     
     return result;
   } catch (error) {
-    console.error('❌ Error en query:', { text, params, error: error.message });
+    console.error('Error en query:', { text, params, error: error.message });
     throw error;
   }
 }

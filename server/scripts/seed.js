@@ -1,9 +1,11 @@
+// Datos de Prueba para la base de datos
+
 const { query } = require('../config/database');
 require('dotenv').config();
 
 async function seedDatabase() {
   try {
-    console.log('🌱 Iniciando población de base de datos...');
+    console.log('Iniciando población de base de datos...');
 
     // Crear tabla de usuarios si no existe
     await query(`
@@ -40,13 +42,13 @@ async function seedDatabase() {
     await query('CREATE INDEX IF NOT EXISTS idx_users_active ON users(is_active)');
     await query('CREATE INDEX IF NOT EXISTS idx_users_created ON users(created_at)');
 
-    console.log('✅ Tablas creadas/verificadas exitosamente');
+    console.log('Tablas creadas/verificadas exitosamente');
 
     // Verificar si ya hay usuarios
     const existingUsers = await query('SELECT COUNT(*) FROM users');
     
     if (parseInt(existingUsers.rows[0].count) > 0) {
-      console.log('ℹ️  La base de datos ya tiene usuarios. Saltando población...');
+      console.log('ℹ  La base de datos ya tiene usuarios. Saltando población...');
       return;
     }
 
@@ -54,37 +56,37 @@ async function seedDatabase() {
     const users = [
       {
         username: 'admin',
-        email: 'admin@demo.com',
+        email: 'admin@email.com',
         password: 'Admin123!',
         isAdmin: true
       },
       {
         username: 'usuario1',
-        email: 'usuario1@demo.com',
+        email: 'usuario1@email.com',
         password: 'User123!',
         isAdmin: false
       },
       {
         username: 'usuario2',
-        email: 'usuario2@demo.com',
+        email: 'usuario2@email.com',
         password: 'User123!',
         isAdmin: false
       },
       {
         username: 'test_user',
-        email: 'test@demo.com',
+        email: 'test@email.com',
         password: 'Test123!',
         isAdmin: false
       },
       {
         username: 'demo_user',
-        email: 'demo@demo.com',
+        email: 'demo@email.com',
         password: 'Demo123!',
         isAdmin: false
       }
     ];
 
-    console.log('👥 Creando usuarios de ejemplo...');
+    console.log('Creando usuarios de ejemplo...');
 
     for (const user of users) {
       // Hash de la contraseña
@@ -110,19 +112,11 @@ async function seedDatabase() {
         [userId, permissions]
       );
 
-      console.log(`✅ Usuario creado: ${user.username} (${user.isAdmin ? 'Admin' : 'User'})`);
+      console.log(` Usuario creado: ${user.username} (${user.isAdmin ? 'Admin' : 'User'})`);
     }
 
-    // Crear algunos usuarios adicionales para demostración
-    const additionalUsers = [
-      'john_doe',
-      'jane_smith',
-      'bob_wilson',
-      'alice_brown',
-      'charlie_davis'
-    ];
-
-    console.log('👥 Creando usuarios adicionales para demostración...');
+    
+    console.log('Creando usuarios adicionales para demostración...');
 
     for (const username of additionalUsers) {
       const email = `${username.replace('_', '.')}@demo.com`;
@@ -143,20 +137,20 @@ async function seedDatabase() {
         [userId, ['read', 'write']]
       );
 
-      console.log(`✅ Usuario adicional creado: ${username}`);
+      console.log(`Usuario adicional creado: ${username}`);
     }
 
-    console.log('🎉 Base de datos poblada exitosamente!');
-    console.log('\n📊 Resumen:');
+    console.log('Base de datos poblada exitosamente!');
+    console.log('\n Resumen:');
     console.log(`   - Total de usuarios: ${users.length + additionalUsers.length}`);
     console.log(`   - Administradores: ${users.filter(u => u.isAdmin).length}`);
-    console.log(`   - Usuarios regulares: ${users.filter(u => !u.isAdmin).length + additionalUsers.length}`);
-    console.log('\n🔑 Credenciales de prueba:');
-    console.log('   Admin: admin@demo.com / Admin123!');
+    console.log(`   - Usuarios: ${users.filter(u => !u.isAdmin).length + additionalUsers.length}`);
+    console.log('\n Credenciales de prueba:');
+    console.log('   Admin: admin@email.com / Admin123!');
     console.log('   Usuario: usuario1@demo.com / User123!');
 
   } catch (error) {
-    console.error('❌ Error al poblar la base de datos:', error);
+    console.error('rror al poblar la base de datos:', error);
     throw error;
   }
 }
@@ -165,11 +159,11 @@ async function seedDatabase() {
 if (require.main === module) {
   seedDatabase()
     .then(() => {
-      console.log('✅ Script de población completado');
+      console.log(' Script de datos de prueba completado');
       process.exit(0);
     })
     .catch((error) => {
-      console.error('❌ Error en script de población:', error);
+      console.error('Error en script de datos de prueba:', error);
       process.exit(1);
     });
 }
