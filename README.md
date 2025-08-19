@@ -57,13 +57,13 @@
 - npm o yarn
 
 ### 1. Clonar el repositorio
-```bash
+
 git clone <-repositorio>
 cd SQLinjection
-```
+
 
 ### 2. Configurar la base de datos
-```bash
+
 # Conectar a PostgreSQL
 psql -U postgres
 
@@ -73,20 +73,20 @@ CREATE USER sqli_user WITH PASSWORD 'Unis2025';
 GRANT CONNECT ON DATABASE sqli_demo TO sqli_user;
 GRANT USAGE ON SCHEMA public TO sqli_user;
 GRANT CREATE ON SCHEMA public TO sqli_user;
-```
+
 
 ### 3. Configurar variables de entorno
-```bash
+
 # Copiar archivo de ejemplo
 cp server/env.example server/.env
 
 # Editar .env con tus valores
 DATABASE_URL=postgres://sqli_user:Unis2025@localhost:5432/sqli_demo
 JWT_SECRET=tu_jwt_secret_super_seguro_aqui
-```
+
 
 ### 4. Instalar dependencias
-```bash
+
 # Instalar dependencias del proyecto principal
 npm install
 
@@ -95,19 +95,19 @@ cd server && npm install
 
 # Instalar dependencias del cliente
 cd ../client && npm install
-```
+
 
 ### 5. Poblar la base de datos
-```bash
+
 cd ../server
 npm run db:seed
-```
+
 
 ### 6. Ejecutar el proyecto
-```bash
+
 # Desde la raíz del proyecto
 npm run dev
-```
+
 
 El proyecto estará disponible en:
 - **Frontend**: http://localhost:5173
