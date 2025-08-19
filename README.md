@@ -114,7 +114,7 @@ El proyecto estará disponible en:
 - **Backend**: http://localhost:3000
 
 
-```
+
 
 ## Arquitectura
 
