@@ -94,21 +94,21 @@ const HomePage = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="hero">
-        <div className="max-w-7xl mx-auto px-8 py-24">
+        <div className="max-w-7xl mx-auto px-8 py-4">
           <div className="text-center">
             <div className="flex justify-center mb-8">
-              <div className="w-20 h-20 bg-gradient-to-r from-primary-600 to-primary-800 rounded-2xl flex items-center justify-center shadow-soft">              </div>
+              
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
             
-              <span className="text-white">SQL Injection</span>
+              
               <br />
              
             </h1>
             
             <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Security project that demonstrates SQL Injection vulnerabilities.
+            
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -133,7 +133,7 @@ const HomePage = () => {
           <div className="space-y-12">
             {/* CATEGORY 1: DATA EXFILTRATION & SCHEMA */}
             <div>
-              <h3 className="text-2xl font-bold text-red-700 mb-6 text-center bg-red-50 px-4 py-2 rounded-lg border border-red-200">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
                 Data Exfiltration & Schema
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -169,7 +169,7 @@ const HomePage = () => {
 
             {/* CATEGORY 2: DATABASE INFORMATION */}
             <div>
-              <h3 className="text-2xl font-bold text-blue-700 mb-6 text-center bg-blue-50 px-4 py-2 rounded-lg border border-blue-200">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
                 Database Information
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -204,7 +204,7 @@ const HomePage = () => {
 
             {/* CATEGORY 3: TABLE/SCHEMA CREATION */}
             <div>
-              <h3 className="text-2xl font-bold text-purple-700 mb-6 text-center bg-purple-50 px-4 py-2 rounded-lg border border-purple-200">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
                 Table/Schema Creation
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -239,7 +239,7 @@ const HomePage = () => {
 
             {/* CATEGORY 4: DATA DELETION */}
             <div>
-              <h3 className="text-2xl font-bold text-yellow-700 mb-6 text-center bg-blue-50 px-4 py-2 rounded-lg border border-yellow-200">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
                 Data Deletion
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

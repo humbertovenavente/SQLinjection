@@ -6,7 +6,7 @@
 
 set -e  # Salir si hay algún error
 
-echo "🚀 Iniciando instalación de SQL Injection Demo..."
+echo "Iniciando instalación de SQL Injection ..."
 echo "=================================================="
 
 # Colores para output
@@ -233,7 +233,7 @@ verify_installation() {
 # Mostrar instrucciones de uso
 show_usage() {
     echo ""
-    echo "🎉 ¡Instalación completada exitosamente!"
+    echo " ¡Instalación completada exitosamente!"
     echo "========================================"
     echo ""
     echo "Para ejecutar el proyecto:"
@@ -251,11 +251,11 @@ show_usage() {
     echo "   - Frontend: http://localhost:5173"
     echo "   - Backend: http://localhost:3000"
     echo ""
-    echo "🔑 Credenciales de prueba:"
-    echo "   - Admin: admin@demo.com / Admin123!"
-    echo "   - Usuario: usuario1@demo.com / User123!"
+    echo " Credenciales de prueba:"
+    echo "   - Admin: admin@email.com / Admin123!"
+    echo "   - Usuario: usuario1@email.com / User123!"
     echo ""
-    echo "⚠️  IMPORTANTE:"
+    echo " IMPORTANTE:"
     echo "   - Este proyecto es SOLO para fines educativos"
     echo "   - No usar en producción sin revisión de seguridad"
     echo "   - Las consultas vulnerables mostradas son simulaciones controladas"

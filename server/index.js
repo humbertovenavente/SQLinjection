@@ -74,12 +74,12 @@ async function startServer() {
   try {
     await connectDB();
     app.listen(PORT, () => {
-      console.log(`🚀 Servidor ejecutándose en puerto ${PORT}`);
-      console.log(`🔒 Modo de seguridad: ${process.env.MODE}`);
-      console.log(`🌍 Entorno: ${process.env.NODE_ENV}`);
+      console.log(`Servidor ejecutándose en puerto ${PORT}`);
+      console.log(`Modo de seguridad: ${process.env.MODE}`);
+      console.log(`Entorno: ${process.env.NODE_ENV}`);
     });
   } catch (error) {
-    console.error('❌ Error al iniciar el servidor:', error);
+    console.error('Error al iniciar el servidor:', error);
     process.exit(1);
   }
 }

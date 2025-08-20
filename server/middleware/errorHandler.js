@@ -1,6 +1,6 @@
 const errorHandler = (err, req, res, next) => {
   // Log del error completo para debugging
-  console.error('❌ Error en la aplicación:', {
+  console.error(' Error en la aplicación:', {
     message: err.message,
     stack: err.stack,
     url: req.url,
@@ -68,7 +68,7 @@ const errorHandler = (err, req, res, next) => {
     message = 'Acceso denegado por seguridad';
     
     // Log adicional para auditoría
-    console.warn('🚨 Intento de SQL Injection bloqueado:', {
+    console.warn(' Intento de SQL Injection bloqueado:', {
       ip: req.ip,
       url: req.url,
       body: req.body,
@@ -108,7 +108,7 @@ const asyncErrorHandler = (fn) => {
 // Middleware para manejar errores de conexión a la base de datos
 const dbErrorHandler = (err, req, res, next) => {
   if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND') {
-    console.error('❌ Error de conexión a la base de datos:', err);
+    console.error('Error de conexión a la base de datos:', err);
     return res.status(503).json({
       error: true,
       message: 'Servicio temporalmente no disponible',

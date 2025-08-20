@@ -33,7 +33,7 @@ const securityMiddleware = (req, res, next) => {
   );
   
   if (hasSuspiciousPattern) {
-    console.warn('🚨 Intento de acceso sospechoso detectado:', {
+    console.warn(' Intento de acceso sospechoso detectado:', {
       ip,
       userAgent,
       url: req.url,

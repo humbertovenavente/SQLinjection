@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -59,8 +59,7 @@ function App() {
         </Routes>
       </main>
       
-      {/* FOOTER - Pie de página en la parte inferior */}
-      <Footer />
+
     </div>
   );
 }

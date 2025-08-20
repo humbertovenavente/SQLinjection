@@ -345,9 +345,9 @@ body {
 
 /* Hero section */
 .hero {
-  background: #2563eb;
-  color: white;
-  padding: 4rem 0;
+  background: transparent;
+  color: #333;
+  padding: 0;
   text-align: center;
 }
 

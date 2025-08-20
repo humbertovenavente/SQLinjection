@@ -58,7 +58,7 @@ export const SecurityProvider = ({ children }) => {
       if (mode === 'preview_vulnerable') {
         addSecurityLog({
           type: 'warning',
-          message: '⚠️ MODO DEMO: Mostrando consulta vulnerable pero ejecutando la segura',
+          message: 'MODO DEMO: Mostrando consulta vulnerable pero ejecutando la segura',
           details: { query, mode }
         });
       }
@@ -106,7 +106,7 @@ export const SecurityProvider = ({ children }) => {
     
     addSecurityLog({
       type: 'warning',
-      message: `🚨 DEMO: Ejecutando ataque de prueba: ${attackType}`,
+      message: `DEMO: Ejecutando ataque de prueba: ${attackType}`,
       details: { attackType, payload }
     });
 
@@ -142,7 +142,7 @@ export const SecurityProvider = ({ children }) => {
       if (response.data.success) {
         addSecurityLog({
           type: 'info',
-          message: '⚠️ DEMO: Ataque simulado - consulta ejecutada de forma segura',
+          message: ' DEMO: Ataque simulado - consulta ejecutada de forma segura',
           details: { 
             attackType, 
             payload: demoQuery,

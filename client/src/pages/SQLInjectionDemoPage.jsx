@@ -19,8 +19,6 @@ const SQLInjectionDemoPage = () => {
   const [selectedAttack, setSelectedAttack] = React.useState('');
   const [currentMode, setCurrentMode] = React.useState('secure');
   const [isModeChanging, setIsModeChanging] = React.useState(false);
-  const [customLink, setCustomLink] = React.useState('');
-  const [linkMode, setLinkMode] = React.useState('local'); // 'local' o 'external'
 
   // Obtener el modo actual al cargar la página
   React.useEffect(() => {
@@ -65,54 +63,10 @@ const SQLInjectionDemoPage = () => {
     
     setIsLoading(true);
     try {
-      if (linkMode === 'local') {
-        // Modo local - ejecutar en tu base de datos
-        const response = await fetch(`/api/demo/search?q=${encodeURIComponent(query)}&mode=${currentMode}`);
-        const result = await response.json();
-        setResults(result);
-      } else {
-        // Modo externo - hacer petición a página web
-        if (!customLink.trim()) {
-          setResults({ error: 'U' });
-          return;
-        }
-        
-        // Construir la URL completa con el ataque SQL
-        const url = new URL(customLink);
-        const params = new URLSearchParams(url.search);
-        
-        // Agregar el SQL query como parámetro
-        params.set('id', query); // o 'q', 'query', etc. según la página
-        
-        const attackUrl = `${url.origin}${url.pathname}?${params.toString()}`;
-        
-        console.log('Executing attack SQL Injection in:', attackUrl);
-        
-        // Hacer petición HTTP a la URL externa con el ataque
-        const response = await fetch(`/api/demo/external-test?url=${encodeURIComponent(attackUrl)}`);
-        const result = await response.json();
-        
-        if (result.success) {
-          setResults({
-            success: true,
-            mode: 'external',
-            searchTerm: query,
-            message: 'Attack executed successfully',
-            externalData: {
-              url: attackUrl,
-              originalUrl: customLink,
-              sqlQuery: query,
-              status: result.status,
-              statusText: result.statusText,
-              data: result.data,
-              size: result.size,
-              headers: result.headers
-            }
-          });
-        } else {
-          setResults({ error: result.message });
-        }
-      }
+      // Solo modo local - ejecutar en tu base de datos
+      const response = await fetch(`/api/demo/search?q=${encodeURIComponent(query)}&mode=${currentMode}`);
+      const result = await response.json();
+      setResults(result);
     } catch (error) {
       setResults({ error: 'Error al ejecutar el ataque: ' + error.message });
     } finally {
@@ -120,13 +74,7 @@ const SQLInjectionDemoPage = () => {
     }
   };
 
-  const copyCustomLink = () => {
-    if (customLink.trim()) {
-      navigator.clipboard.writeText(customLink);
-      // Mostrar toast de confirmación
-      alert('Link copied to clipboard');
-    }
-  };
+
 
   const attackExamples = [
     // CATEGORÍA 1: EXFILTRACIÓN DE DATOS Y ESQUEMA
@@ -270,11 +218,7 @@ It's time to attack!              </h1>
           
           {/* Security Mode Controls */}
           <div className="flex items-center space-x-4">
-            <div className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium ${
-              currentMode === 'secure' 
-                ? 'bg-green-100 text-green-800' 
-                : 'bg-yellow-100 text-yellow-800'
-            }`}>
+            <div className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
               
               Mode: {currentMode === 'secure' ? 'Secure' : 'Vulnerable'}
             </div>
@@ -302,52 +246,12 @@ It's time to attack!              </h1>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Query Input */}
           <div className="space-y-6">
-            {/* Enlace personalizado */}
+            {/* Base de datos local */}
             <div className="card">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Link
+                Local PostgreSQL Database
               </h3>
               <div className="space-y-4">
-                {/* Botones de modo */}
-                <div className="flex space-x-3">
-                  <button
-                    onClick={() => setLinkMode('local')}
-                    className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
-                      linkMode === 'local'
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }`}
-                  >
-                      Local (My PostgreSQL DATABASE)
-                  </button>
-                  <button
-                    onClick={() => setLinkMode('external')}
-                    className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
-                      linkMode === 'external'
-                        ? 'bg-green-600 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }`}
-                  >   
-                     Website Link 
-                  </button>
-                </div>
-                
-                {/* Campo de enlace (solo visible en modo externo) */}
-                {linkMode === 'external' && (
-                  <div>
-                    <label htmlFor="customLink" className="form-label">
-                      URL 
-                    </label>
-                    <input
-                      id="customLink"
-                      type="url"
-                      placeholder="https://ejemplo.com/api/usuarios"
-                      className="input-field"
-                      value={customLink}
-                      onChange={(e) => setCustomLink(e.target.value)}
-                    />
-                  </div>
-                )}
                 
                 <div>
                   <label htmlFor="sqlQuery" className="form-label">
@@ -365,7 +269,7 @@ It's time to attack!              </h1>
                 <div className="flex space-x-3">
                   <button
                     onClick={handleCustomLink}
-                    disabled={isLoading || !query.trim() || (linkMode === 'external' && !customLink.trim())}
+                    disabled={isLoading || !query.trim()}
                     className="btn-primary flex-1"
                   >
                     {isLoading ? (
@@ -553,15 +457,7 @@ It's time to attack!              </h1>
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      {/* Mostrar mensaje de éxito sin emojis ni advertencias */}
-                      {results.success && (
-                        <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                          <h4 className="font-medium text-green-800 mb-2">Executed Query</h4>
-                          <p className="text-green-700 text-sm">
-                            {results.message}
-                          </p>
-                        </div>
-                      )}
+
                       
                       {/* Mostrar resultados reales de la base de datos */}
                       {results.results && results.results.length > 0 && (
@@ -698,9 +594,7 @@ It's time to attack!              </h1>
                             </table>
                           </div>
                           
-                          <p className="text-sm text-gray-600 mt-3">
-                            <strong>Total extracted records:</strong> {results.totalResults}
-                          </p>
+
                         </div>
                       )}
                       
@@ -714,41 +608,7 @@ It's time to attack!              </h1>
                         </div>
                       )}
                       
-                      {/* Mostrar información técnica del SQL ejecutado */}
-                      {results.executedSQL && (
-                        <div className="mt-6">
-                          <h4 className="font-medium text-gray-900 mb-3">Technical Information of the Query</h4>
-                          
-                          {/* SQL ejecutado */}
-                          <div className="mb-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                            <h5 className="font-medium text-gray-800 mb-2">SQL Executed in the Backend:</h5>
-                            <div className="bg-gray-100 p-3 rounded font-mono text-sm text-gray-900 overflow-x-auto">
-                              {results.executedSQL}
-                            </div>
-                          </div>
-                          
-                          {/* Tipo de ataque o consulta */}
-                          {results.attackType && (
-                            <div className="mb-4">
-                              <h5 className="font-medium text-gray-800 mb-2">Query Type:</h5>
-                              <span className={`inline-block px-3 py-2 rounded-full text-sm font-medium ${
-                                results.attackType === 'union_attack' ? 'bg-red-100 text-red-800' :
-                                results.attackType === 'schema_discovery' ? 'bg-blue-100 text-blue-800' :
-                                results.attackType === 'secure_query' ? 'bg-green-100 text-green-800' :
-                                'bg-gray-100 text-gray-800'
-                              }`}>
-                                {results.attackType === 'union_attack' ? ' UNION Attack' :
-                                 results.attackType === 'schema_discovery' ? ' Schema Discovery' :
-                                 results.attackType === 'secure_query' ? 'Secure Query' :
-                                 ' Normal Query'}
-                              </span>
-                            </div>
-                          )}
-                          
-                          {/* Información de seguridad para modo seguro */}
-                         
-                        </div>
-                      )}
+
                       
                       {/* Mostrar datos externos */}
                       {results.externalData && (

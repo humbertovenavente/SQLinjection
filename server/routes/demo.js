@@ -5,7 +5,7 @@ const { authenticateToken } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Variable global para el modo (en producción esto debería estar en la base de datos)
+// Variable global 
 let currentMode = process.env.MODE || 'secure';
 
 // Ruta para cambiar el modo de seguridad
