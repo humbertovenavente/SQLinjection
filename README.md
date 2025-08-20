@@ -114,10 +114,10 @@ El proyecto estará disponible en:
 - **Backend**: http://localhost:3000
 
 
-```
+
 
 ## Arquitectura
-```
+
 SQLinjection/
 ├── server/                 # Backend Node.js
 │   ├── config/            # Configuración de BD
@@ -132,7 +132,7 @@ SQLinjection/
 │   └── package.json       # Dependencias
 ├── package.json           # Scripts del proyecto
 └── README.md              # Este archivo
-```
+
 
 ## Recursos de Aprendizaje
 
