@@ -37,7 +37,7 @@ const Navbar = () => {
                 
               </div>
               <span className="navbar-brand">
-                SQL Injection Attacks
+                SQL Injection by Jose Najar
               </span>
             </Link> 
           </div>
