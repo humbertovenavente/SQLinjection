@@ -295,7 +295,7 @@ It's time to attack!              </h1>
 
             {/* Ejemplos de Ataques Organizados por Categorías */}
             <div className="space-y-6">
-              <h3 className="text-lg font-semibold text-gray-900">Examples of SQL Injection Attacks</h3>
+              <h3 className="text-lg font-semibold text-gray-900">SQL commands</h3>
               
               {/* CATEGORÍA 1: EXFILTRACIÓN DE DATOS Y ESQUEMA */}
               <div className="space-y-3">
@@ -313,7 +313,7 @@ It's time to attack!              </h1>
                             onClick={() => setQuery(attack.query)}
                             className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
                           >
-                            Try
+                            Copy
                           </button>
                         </div>
                         <p className="text-sm text-gray-600 mb-2">{attack.description}</p>
@@ -341,7 +341,7 @@ It's time to attack!              </h1>
                             onClick={() => setQuery(attack.query)}
                             className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
                           >
-                            Try
+                            Copy
                           </button>
                         </div>
                         <p className="text-sm text-gray-600 mb-2">{attack.description}</p>
@@ -369,7 +369,7 @@ It's time to attack!              </h1>
                             onClick={() => setQuery(attack.query)}
                             className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
                           >
-                            Try
+                            Copy
                           </button>
                         </div>
                         <p className="text-sm text-gray-600 mb-2">{attack.description}</p>
@@ -397,7 +397,7 @@ It's time to attack!              </h1>
                             onClick={() => setQuery(attack.query)}
                             className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
                           >
-                            Try
+                            Copy
                           </button>
                         </div>
                         <p className="text-sm text-gray-600 mb-2">{attack.description}</p>
@@ -425,7 +425,7 @@ It's time to attack!              </h1>
                             onClick={() => setQuery(attack.query)}
                             className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
                           >
-                            Try
+                            Copy
                           </button>
                         </div>
                         <p className="text-sm text-gray-600 mb-2">{attack.description}</p>
